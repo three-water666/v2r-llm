@@ -45,11 +45,11 @@ if (fs.existsSync(targetPath)) {
     ])
     .then(({ ok }) => {
       if (ok) {
-        transform();
+        transform(src, targetPath);
       } else {
         process.exit(1);
       }
     });
 } else {
-  transform();
+  transform(src, targetPath);
 }
