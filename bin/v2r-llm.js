@@ -11,6 +11,7 @@ program
   .option("-i, --input <file>", "the input path for vue component")
   .option("-o, --output <dir>", "the output path for react component")
   .option("-n, --name <filename>", "the output file name")
+  .option("-k, --key <apiKey>", "the API key for authentication")
   .parse();
 
 const options = program.opts();
@@ -45,11 +46,11 @@ if (fs.existsSync(targetPath)) {
     ])
     .then(({ ok }) => {
       if (ok) {
-        transform(src, targetPath);
+        transform(src, targetPath, options.key);
       } else {
         process.exit(1);
       }
     });
 } else {
-  transform(src, targetPath);
+  transform(src, targetPath, options.key);
 }

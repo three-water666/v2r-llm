@@ -2,14 +2,14 @@ import OpenAI from "openai";
 import fs from "fs";
 import { log } from "./utils.js";
 
-const openai = new OpenAI({
-  baseURL: 'https://api.deepseek.com',
-  apiKey: process.env.DEEPSEEK_API_KEY
-});
-
-export default async function transform(src, targetPath) {
+export default async function transform(src, targetPath, apiKey) {
   const source = fs.readFileSync(src, "utf-8");
   const prompt = `Convert the following Vue component to React component:\n\n${source}\n\n`;
+
+  const openai = new OpenAI({
+    baseURL: 'https://api.deepseek.com',
+    apiKey: apiKey || process.env.DEEPSEEK_API_KEY
+  });
 
   const completion = await openai.chat.completions.create({
     model: 'deepseek-chat',
