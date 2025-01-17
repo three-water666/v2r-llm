@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import './your.less';
 import ToDo from './todo';
 
-const TestSfc = ({ msg = 'hello, sfc', imageSrc }) => {
-    const [list] = useState([1, 2, 3]);
-    const [html] = useState('<div>1111<span>222</span>333<p>ssssss</p></div>');
+const TestSFC = ({ msg = 'hello, sfc', imageSrc }) => {
+    const [list, setList] = useState([1, 2, 3]);
+    const [html, setHtml] = useState('<div>1111<span>222</span>333<p>ssssss</p></div>');
     const [error, setError] = useState(false);
     const [time, setTime] = useState(Date.now());
 
@@ -56,4 +56,4 @@ const TestSfc = ({ msg = 'hello, sfc', imageSrc }) => {
     );
 };
 
-export default TestSfc;
+export default TestSFC;

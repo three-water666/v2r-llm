@@ -6,22 +6,11 @@
 
 这个项目参考了 [vue-to-react](https://github.com/dwqs/vue-to-react) 项目。代码由 **GitHub Copilot** 辅助完成，转化过程由 **DeepSeek** 提供支持。感谢这些 AI 工具的帮助，让我们能够轻松实现 Vue 到 React 的转化！
 
-## 安装
-
-首先，你需要克隆这个仓库并安装依赖：
-
-```bash
-git clone git@github.com:three-water666/v2r-llm.git
-cd v2r-llm
-npm install
-```
-
 ## 使用方法
 
-使用这个 CLI 工具非常简单，只需要一条命令：
-
 ```bash
-node ./bin/v2r-llm.js -i <input-vue-file> -o <output-directory> -n <output-filename> [-k <apiKey>]
+npm install -g v2r-llm
+npx v2r-llm -i <input-vue-file> -o <output-directory> -n <output-filename> [-k <apiKey>]
 ```
 
 ### 参数说明
@@ -36,6 +25,15 @@ node ./bin/v2r-llm.js -i <input-vue-file> -o <output-directory> -n <output-filen
 假设你有一个 Vue 组件文件 `demo.vue`，你可以这样转化它：
 
 ```bash
+npx v2r-llm -i ./demo.vue -o ./ -n demo.js -k your-api-key
+```
+
+## 本地开发
+
+```bash
+git clone git@github.com:three-water666/v2r-llm.git
+cd v2r-llm
+npm install
 node ./bin/v2r-llm.js -i ./demo/demo.vue -o ./demo/ -n demo.js -k your-api-key
 ```
 
@@ -45,5 +43,6 @@ node ./bin/v2r-llm.js -i ./demo/demo.vue -o ./demo/ -n demo.js -k your-api-key
 
 - **GitHub Copilot**：代码编写好帮手
 - **DeepSeek**：强大的大模型服务
+- **ChatGPT**：得力的聊天工具
 
 希望你能喜欢这个项目，并且它能为你的开发工作带来便利！如果你有任何问题或建议，欢迎提交 issue 或 pull request。Happy coding! 😄
