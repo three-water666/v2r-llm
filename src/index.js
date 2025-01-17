@@ -4,7 +4,7 @@ import { log } from "./utils.js";
 
 const openai = new OpenAI({
   baseURL: 'https://api.deepseek.com',
-  apiKey: '<DeepSeek API Key>'
+  apiKey: process.env.DEEPSEEK_API_KEY
 });
 
 export default async function transform(src, targetPath) {
