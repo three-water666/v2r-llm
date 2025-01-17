@@ -4,7 +4,7 @@ import { log } from "./utils.js";
 
 export default async function transform(src, targetPath, apiKey) {
   const source = fs.readFileSync(src, "utf-8");
-  const prompt = `Convert the following Vue component to React component:\n\n${source}\n\n`;
+  const prompt = `Convert the following Vue component to a React component. Only return the React component code without any additional text:\n\n${source}\n\n`;
 
   const openai = new OpenAI({
     baseURL: 'https://api.deepseek.com',
@@ -28,7 +28,8 @@ export default async function transform(src, targetPath, apiKey) {
       ]
     });
 
-    const reactComponent = completion.choices[0].message.content;
+    const reactComponentMd = completion.choices[0].message.content;
+    const reactComponent = reactComponentMd.match(/```jsx([\s\S]*?)```/)[1].trim();
     fs.writeFileSync(targetPath, reactComponent);
     spinner.succeed("React component has been generated successfully.");
   } catch (error) {
