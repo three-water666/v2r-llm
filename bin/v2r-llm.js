@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
-const { program } = require("commander");
-const { log } = require("../src/utils");
-const path = require("path");
-const fs = require("fs");
-const inquirer = require("inquirer");
-const transform = require("../src/index");
+import { program } from "commander";
+import { log } from "../src/utils.js";
+import path from "path";
+import fs from "fs";
+import inquirer from "inquirer";
+import transform from "../src/index.js";
 
 program
   .option("-i, --input <file>", "the input path for vue component")
@@ -36,7 +36,7 @@ const targetPath = path.resolve(process.cwd(), path.join(dist, options.name));
 
 if (fs.existsSync(targetPath)) {
   inquirer
-    .createPromptModule([
+    .prompt([
       {
         type: "confirm",
         message: `The file ${targetPath} already exists, do you want to overwrite it?`,

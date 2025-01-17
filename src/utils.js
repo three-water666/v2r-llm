@@ -1,4 +1,4 @@
-const chalk = require("chalk");
+import chalk from "chalk";
 
 const log = function (msg) {
   console.log(msg);
@@ -12,4 +12,4 @@ log.success = function (msg) {
   console.log(chalk.green(msg));
 };
 
-exports.log = log;
+export { log };

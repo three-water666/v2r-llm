@@ -1,3 +1,3 @@
-module.exports = function transform() {
+export default function transform() {
   console.log("transform");
-};
+}
