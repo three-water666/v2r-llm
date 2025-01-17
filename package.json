@@ -1,0 +1,14 @@
+{
+  "name": "v2r-llm",
+  "version": "1.0.0",
+  "description": "vue to react, but llm",
+  "main": "index.js",
+  "bin": {
+    "v2r-llm": "./bin/v2r-llm.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
