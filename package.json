@@ -25,5 +25,16 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/three-water666/v2r-llm"
-  }
+  },
+  "keywords": [
+    "react",
+    "vue",
+    "transformation",
+    "vue-to-react",
+    "llm",
+    "openai",
+    "deepseek",
+    "copilot",
+    "chatgpt"
+  ]
 }
