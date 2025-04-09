@@ -5,6 +5,10 @@ const log = function (msg) {
   console.log(msg);
 };
 
+log.info = function (msg) {
+  console.log(chalk.blue(msg));
+};
+
 log.error = function (msg) {
   console.log(chalk.red(msg));
 };
