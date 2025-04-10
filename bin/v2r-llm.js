@@ -9,12 +9,15 @@ import transform from "../src/index.js";
 import { getConfig, setConfig, deleteConfig } from "../src/config.js";
 
 function resolveConfig(options) {
-  const baseURL = options.baseURL || getConfig("baseURL") || "https://api.deepseek.com";
+  const baseURL =
+    options.baseURL || getConfig("baseURL") || "https://api.deepseek.com";
   const model = options.model || getConfig("model") || "deepseek-chat";
   const apiKey = options.key || getConfig("apiKey");
 
   if (!apiKey) {
-    log.error("API key is required. Use '-k' option or set it via 'config set apiKey <value>'.");
+    log.error(
+      "API key is required. Use '-k' option or set it via 'config set apiKey <value>'."
+    );
     process.exit(1);
   }
 
@@ -57,53 +60,54 @@ program
   });
 
 program
-  .option("-i, --input <file>", "the input path for vue component")
-  .option("-o, --output <dir>", "the output path for react component")
-  .option("-n, --name <filename>", "the output file name")
+  .command("transform")
+  .description("Transform a Vue component to a React component")
+  .requiredOption("-i, --input <file>", "the input path for vue component")
+  .requiredOption("-o, --output <dir>", "the output path for react component")
+  .requiredOption("-n, --name <filename>", "the output file name")
   .option("-k, --key <apiKey>", "the API key for authentication")
   .option("-b, --baseURL <url>", "the base URL for API")
   .option("-m, --model <modelName>", "the model name for processing")
-  .parse();
+  .action((options) => {
+    const src = path.resolve(process.cwd(), options.input);
+    const dist = path.resolve(process.cwd(), options.output);
 
-const options = program.opts();
+    if (!fs.existsSync(src)) {
+      log.error(`${src} is not exist`);
+      process.exit(1);
+    }
 
-if (!options.input || !options.output || !options.name) {
-  program.help();
-}
+    if (!fs.existsSync(dist)) {
+      log.error(`${dist} is not exist`);
+      process.exit(1);
+    }
 
-const src = path.resolve(process.cwd(), options.input);
-const dist = path.resolve(process.cwd(), options.output);
+    const targetPath = path.resolve(
+      process.cwd(),
+      path.join(dist, options.name)
+    );
 
-if (!fs.existsSync(src)) {
-  log.error(`${src} is not exist`);
-  process.exit(1);
-}
+    const { baseURL, model, apiKey } = resolveConfig(options);
 
-if (!fs.existsSync(dist)) {
-  log.error(`${dist} is not exist`);
-  process.exit(1);
-}
+    if (fs.existsSync(targetPath)) {
+      inquirer
+        .prompt([
+          {
+            type: "confirm",
+            message: `The file ${targetPath} already exists, do you want to overwrite it?`,
+            name: "ok",
+          },
+        ])
+        .then(({ ok }) => {
+          if (ok) {
+            transform(src, targetPath, apiKey, baseURL, model);
+          } else {
+            process.exit(1);
+          }
+        });
+    } else {
+      transform(src, targetPath, apiKey, baseURL, model);
+    }
+  });
 
-const targetPath = path.resolve(process.cwd(), path.join(dist, options.name));
-
-const { baseURL, model, apiKey } = resolveConfig(options);
-
-if (fs.existsSync(targetPath)) {
-  inquirer
-    .prompt([
-      {
-        type: "confirm",
-        message: `The file ${targetPath} already exists, do you want to overwrite it?`,
-        name: "ok",
-      },
-    ])
-    .then(({ ok }) => {
-      if (ok) {
-        transform(src, targetPath, apiKey, baseURL, model);
-      } else {
-        process.exit(1);
-      }
-    });
-} else {
-  transform(src, targetPath, apiKey, baseURL, model);
-}
+program.parse(process.argv);
