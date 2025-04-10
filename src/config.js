@@ -1,7 +1,8 @@
 import fs from "fs";
 import path from "path";
+import os from "os";
 
-const CONFIG_FILE = path.resolve(process.cwd(), ".v2r-llm-config.json");
+const CONFIG_FILE = path.resolve(os.homedir(), ".v2r-llm-config.json");
 
 export function getConfig(key) {
   if (!fs.existsSync(CONFIG_FILE)) {
@@ -27,4 +28,14 @@ export function deleteConfig(key) {
   const config = JSON.parse(fs.readFileSync(CONFIG_FILE, "utf-8"));
   delete config[key];
   fs.writeFileSync(CONFIG_FILE, JSON.stringify(config, null, 2));
+}
+
+export function listConfig() {
+  if (!fs.existsSync(CONFIG_FILE)) {
+    return "No configuration found.";
+  }
+  const config = JSON.parse(fs.readFileSync(CONFIG_FILE, "utf-8"));
+  return Object.entries(config)
+    .map(([key, value]) => `${key}: ${value}`)
+    .join("\n");
 }

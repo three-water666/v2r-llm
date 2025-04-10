@@ -6,7 +6,12 @@ import path from "path";
 import fs from "fs";
 import inquirer from "inquirer";
 import transform from "../src/index.js";
-import { getConfig, setConfig, deleteConfig } from "../src/config.js";
+import {
+  getConfig,
+  setConfig,
+  deleteConfig,
+  listConfig,
+} from "../src/config.js";
 
 function resolveConfig(options) {
   const baseURL =
@@ -40,7 +45,8 @@ program
       if (key) {
         log.info(config ? `${key}: ${config}` : `No value found for '${key}'.`);
       } else {
-        log.info(config);
+        log.error("Key is required for 'get' action.");
+        process.exit(1);
       }
     } else if (action === "delete") {
       if (!key) {
@@ -50,9 +56,9 @@ program
       deleteConfig(key);
       log.info(`Configuration '${key}' deleted.`);
     } else if (action === "list") {
-      const config = getConfig();
+      const configList = listConfig();
       log.info("Current configuration:");
-      log.info(config);
+      log.info(configList);
     } else {
       log.error("Invalid action. Use 'set', 'get', 'delete', or 'list'.");
       process.exit(1);
