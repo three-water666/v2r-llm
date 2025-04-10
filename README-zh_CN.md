@@ -13,7 +13,7 @@
 
 ## 快速使用
 
-如果使用默认的服务和模型，你需要有 **DeepSeek** 的 **apiKey** ，申请方法见官网。也支持其他服务和模型，具体用法见 **transform 命令参数说明**。
+如果使用默认的服务和模型，你需要有 **DeepSeek** 的 **apiKey** ，申请方法见官网。也支持其他服务和模型，具体用法见 [transform 命令参数说明](#transform-命令参数说明)。
 
 ```bash
 npm install -g v2r-llm
